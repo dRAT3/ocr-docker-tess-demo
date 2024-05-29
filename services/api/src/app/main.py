@@ -15,7 +15,7 @@ app = FastAPI(lifespan=lifespan)
 
 @app.get("/ping")
 async def ping():
-    return "pong"
+    return "ponk"
 
 # Used for logging all uncatched exceptions
 app.add_exception_handler(Exception, generic_exception_handler)
