@@ -27,6 +27,4 @@ WORKDIR /app
 RUN chown -R tesseract:tesseract /app
 USER tesseract
 
-ENTRYPOINT ["python3"]
-# The default command or entrypoint to run the Python script
-CMD ["src/minimum_viable_ocr.py"]
+ENTRYPOINT ["gunicorn"]
