@@ -20,6 +20,7 @@ RUN pip3 install -r /app/requirements.txt
 # Copy your Python script into the container
 COPY src /app/src
 COPY test_data /app/test_data 
+COPY run.py /app/run.py
 
 # Set a working directory
 WORKDIR /app
