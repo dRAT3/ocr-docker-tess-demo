@@ -12,6 +12,8 @@ services:
       - "traefik.http.routers.fastapi.rule=Host(`api.nan0.bot`)"
       - "traefik.http.routers.fastapi.tls=true"
       - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
+    volumes:
+      - "./logs:/home/app/logs"
 
   traefik:
     image: traefik:v2.10.7
