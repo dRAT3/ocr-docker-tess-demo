@@ -4,3 +4,4 @@ pikepdf
 fastapi
 gunicorn
 uvicorn
+python-multipart
