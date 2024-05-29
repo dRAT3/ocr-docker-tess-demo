@@ -1,3 +1,6 @@
 ghostscript
 ocrmypdf
 pikepdf
+fastapi
+gunicorn
+uvicorn

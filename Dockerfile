@@ -4,6 +4,7 @@ ARG TESSERACT_VERSION=5.3.4
 FROM jitesoft/tesseract-ocr
 RUN train-lang eng --fast
 
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 USER root
 
 # Install Python, pip, and Ghostscript
