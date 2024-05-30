@@ -4,7 +4,6 @@ services:
   web:
     build:
        context: ./services/api
-       dockerfile: Dockerfile.api
     command: gunicorn run:app --bind 0.0.0.0:5000 -w 4 -k uvicorn.workers.UvicornWorker --timeout 600
     expose:
       - 5000
@@ -36,9 +35,8 @@ services:
 
   worker:
     build:
-      context: ./services/api
-      dockerfile: Dockerfile.worker
-    command: -A src.worker.celery_app.celery worker --loglevel=debug --concurrency=1
+      context: ./services/worker
+    command: -A src.celery_app.celery worker --loglevel=debug --concurrency=1
     depends_on:
       - redis
     volumes:
