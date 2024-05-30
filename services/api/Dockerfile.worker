@@ -14,16 +14,16 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python libraries
-COPY requirements.txt home/app/requirements.txt
-RUN pip3 install -r home/app/requirements.txt
+COPY requirements.txt /home/app/requirements.txt
+RUN pip3 install -r /home/app/requirements.txt
 
 # Copy your Python script into the container
-COPY . home/app/
+COPY . /home/app/
 
 # Set a working directory
-WORKDIR home/app
+WORKDIR /home/app
 
-RUN chown -R tesseract:tesseract /app
+RUN chown -R tesseract:tesseract /home/app
 USER tesseract
 
 ENTRYPOINT ["celery"]
