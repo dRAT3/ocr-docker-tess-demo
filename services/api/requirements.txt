@@ -1,3 +1,7 @@
+fastapi
+gunicorn
+uvicorn
+python-multipart
 celery[redis]
 ghostscript
 ocrmypdf

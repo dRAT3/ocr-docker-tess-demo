@@ -14,7 +14,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Python libraries
-COPY requirements.worker.txt home/app/requirements.txt
+COPY requirements.txt home/app/requirements.txt
 RUN pip3 install -r home/app/requirements.txt
 
 # Copy your Python script into the container
