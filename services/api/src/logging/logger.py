@@ -21,7 +21,7 @@ def setup_logging(filename: str):
             "rotating_file": {
                 "level": "DEBUG",
                 "class": "logging.handlers.RotatingFileHandler",
-                "filename": "/home/app/logs/{filename}.log",
+                "filename": f"/home/app/logs/{filename}.log",
                 "formatter": "standard",
                 "maxBytes": 5 * 1024 * 1024,  # 5 MB
                 "backupCount": 5,  # Keep 5 backup files
