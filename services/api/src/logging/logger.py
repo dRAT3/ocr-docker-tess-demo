@@ -3,7 +3,7 @@ import logging.config
 from logging.handlers import RotatingFileHandler
 
 
-def setup_logging():
+def setup_logging(filename: str):
     logging_config = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -21,7 +21,7 @@ def setup_logging():
             "rotating_file": {
                 "level": "DEBUG",
                 "class": "logging.handlers.RotatingFileHandler",
-                "filename": "/home/app/logs/app.log",
+                "filename": "/home/app/logs/{filename}.log",
                 "formatter": "standard",
                 "maxBytes": 5 * 1024 * 1024,  # 5 MB
                 "backupCount": 5,  # Keep 5 backup files

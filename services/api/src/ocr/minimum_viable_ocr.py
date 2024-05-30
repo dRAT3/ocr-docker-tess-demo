@@ -1,6 +1,7 @@
 from pikepdf import Pdf
 import ocrmypdf
 import uuid
+import logging
 from src.worker.celery_app import celery
 
 async def minimum_viable_ocr():
@@ -10,4 +11,7 @@ async def minimum_viable_ocr():
 
 @celery.task
 def minimum_viable_ocr_task(file_out: str):
+    logger = logging.getLogger(__name__)
+    logger.info("Starting minimum viable ocr task")
     ocr = ocrmypdf.ocr("/home/app/test_data/Schoolkidz-December-2021-statement.pdf", f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+    logger.info("Completed minimum viable ocr task")

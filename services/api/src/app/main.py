@@ -1,12 +1,12 @@
 from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 from src.app.generic_exception_handler import generic_exception_handler
-from src.app.logger import setup_logging
+from src.logging.logger import setup_logging
 from src.ocr.minimum_viable_ocr import minimum_viable_ocr
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    setup_logging()
+    setup_logging("app")
     try:
         yield
     finally:
