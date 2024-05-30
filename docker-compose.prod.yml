@@ -38,7 +38,7 @@ services:
     build:
       context: ./services/api
       dockerfile: Dockerfile.worker
-    command: -A src.celery_app.celery worker
+    command: -A src.worker.celery_app.celery worker
     depends_on:
       - redis
     volumes:
