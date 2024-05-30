@@ -17,6 +17,7 @@ services:
       - "./logs:/home/app/logs"
     depends_on:
       - redis
+      - worker
 
   traefik:
     image: traefik:v2.10.7
@@ -40,5 +41,6 @@ services:
     command: -A src.celery_app.celery worker --loglevel=info
     depends_on:
       - redis
+      - web
     volumes:
       - "./logs:/home/app/logs"
