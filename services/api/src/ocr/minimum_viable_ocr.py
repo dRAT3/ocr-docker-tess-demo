@@ -10,4 +10,4 @@ async def minimum_viable_ocr():
 
 @celery.task
 def minimum_viable_ocr_task(file_out: str):
-    ocr = ocrmypdf.ocr("/app/test_data/Schoolkidz-December-2021-statement.pdf", f"/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+    ocr = ocrmypdf.ocr("/home/app/test_data/Schoolkidz-December-2021-statement.pdf", f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
