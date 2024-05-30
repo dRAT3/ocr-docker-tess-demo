@@ -5,7 +5,7 @@ services:
     build:
        context: ./services/api
        dockerfile: Dockerfile.api
-    command: run:app --bind 0.0.0.0:5000 -w 4 -k uvicorn.workers.UvicornWorker --timeout 600
+    command: gunicorn run:app --bind 0.0.0.0:5000 -w 4 -k uvicorn.workers.UvicornWorker --timeout 600
     expose:
       - 5000
     labels:
@@ -37,7 +37,7 @@ services:
     build:
       context: ./services/api
       dockerfile: Dockerfile.worker
-    command: celery -A src.celery_app.celery worker --loglevel=info
+    command: -A src.celery_app.celery worker --loglevel=info
     depends_on:
       - redis
     volumes:
