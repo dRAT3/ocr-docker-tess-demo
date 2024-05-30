@@ -41,6 +41,5 @@ services:
     command: -A src.celery_app.celery worker --loglevel=info
     depends_on:
       - redis
-      - web
     volumes:
       - "./logs:/home/app/logs"
