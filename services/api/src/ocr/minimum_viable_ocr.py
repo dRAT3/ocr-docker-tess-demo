@@ -1,5 +1,3 @@
-from pikepdf import Pdf
-import ocrmypdf
 import uuid
 import logging
 from src.worker.celery_app import minimum_viable_ocr_task 

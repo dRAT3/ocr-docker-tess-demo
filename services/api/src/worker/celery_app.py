@@ -2,6 +2,8 @@ from celery import Celery
 from src.logging.logger import setup_logging
 import logging
 
+from pikepdf import Pdf
+import ocrmypdf
 
 def make_celery(app_name=__name__):
     logger = logging.getLogger(__name__)
