@@ -4,6 +4,7 @@ services:
   web:
     build:
        context: ./services/api
+       dockerfile: Dockerfile.api
     command: run:app --bind 0.0.0.0:5000 -w 4 -k uvicorn.workers.UvicornWorker --timeout 600
     expose:
       - 5000
@@ -14,6 +15,8 @@ services:
       - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
     volumes:
       - "./logs:/home/app/logs"
+    depends_on:
+      - redis
 
   traefik:
     image: traefik:v2.10.7
@@ -23,4 +26,19 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./services/traefik/traefik.prod.toml:/etc/traefik/traefik.toml"
+      - "./logs:/home/app/logs"
+
+  redis:
+    image: redis:latest
+    expose:
+      - 6379
+
+  worker:
+    build:
+      context: ./services/api
+      dockerfile: Dockerfile.worker
+    command: celery -A src.celery_app.celery worker --loglevel=info
+    depends_on:
+      - redis
+    volumes:
       - "./logs:/home/app/logs"

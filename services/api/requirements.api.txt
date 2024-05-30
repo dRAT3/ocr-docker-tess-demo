@@ -1,7 +1,5 @@
-ghostscript
-ocrmypdf
-pikepdf
 fastapi
 gunicorn
 uvicorn
 python-multipart
+celery[redis]

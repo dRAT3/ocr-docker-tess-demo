@@ -21,6 +21,6 @@ async def ping():
 @app.get("/mvo")
 async def mvo():
     return minimum_viable_ocr()
-    
+
 # Used for logging all uncatched exceptions
 app.add_exception_handler(Exception, generic_exception_handler)
