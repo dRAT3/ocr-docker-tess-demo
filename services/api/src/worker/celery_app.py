@@ -8,7 +8,7 @@ import ocrmypdf
 
 def make_celery(app_name=__name__):
     logger = logging.getLogger(__name__)
-    logger.info("Booting celery worker from {os.getpid()}")
+    logger.info(f"Booting celery worker from {os.getpid()}")
     return Celery(app_name, broker="redis://redis:6379/0", backend="redis://redis:6379/0")
 
 setup_logging("celery")
