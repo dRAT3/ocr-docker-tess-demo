@@ -1,11 +1,8 @@
-from pikepdf import Pdf
-import ocrmypdf
+import uuid
+import logging
+from src.worker.celery_app import minimum_viable_ocr_task 
 
-def minimum_viable_ocr() -> str:
-    ocr = ocrmypdf.ocr("/app/test_data/Schoolkidz-December-2021-statement.pdf", "/app/test_data/out.pdf", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
-    return ocr
-
-
-if __name__=='__main__':
-    print("Running minimum_viable_ocr.py")
-    print(minimum_viable_ocr())
+async def minimum_viable_ocr():
+    file_out = f"{uuid.uuid4()}.pdf"
+    task = minimum_viable_ocr_task.delay(file_out)
+    return {"file_out": file_out, "task_id": task.id}

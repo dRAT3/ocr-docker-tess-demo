@@ -1,31 +1,24 @@
-ARG UBUNTU_VERSION=20.04
-ARG TESSERACT_VERSION=5.3.4
+FROM python:3.11-bookworm
 
-FROM jitesoft/tesseract-ocr
-RUN train-lang eng --fast
-
+ENV WORKDIR=/usr/src/app
+ENV USER=app
+ENV APP_HOME=/home/app/web
+ENV APP_DOC_DIR=/home/app/doc
+ENV LOG_DIR=/home/app/logs
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
-USER root
 
-# Install Python, pip, and Ghostscript
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip ghostscript && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+WORKDIR $WORKDIR
 
-# Install Python libraries
-COPY requirements.txt /app/requirements.txt
-RUN pip3 install -r /app/requirements.txt
+RUN pip install --upgrade pip
+COPY ./requirements.txt $WORKDIR/requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy your Python script into the container
-COPY src /app/src
-COPY test_data /app/test_data 
-COPY run.py /app/run.py
+RUN adduser --system --group $USER
+RUN mkdir -p $APP_HOME
+RUN mkdir -p $LOG_DIR
+WORKDIR $APP_HOME
 
-# Set a working directory
-WORKDIR /app
-
-RUN chown -R tesseract:tesseract /app
-USER tesseract
-
-ENTRYPOINT ["gunicorn"]
+COPY . $APP_HOME
+RUN chown -R $USER:$USER $APP_HOME
+RUN chown -R $USER:$USER $LOG_DIR
+USER $USER
