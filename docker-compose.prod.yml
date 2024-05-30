@@ -36,7 +36,7 @@ services:
   worker:
     build:
       context: ./services/worker
-    command: -A src.celery_app.celery_app worker --loglevel=debug --concurrency=1
+    command: -A src.celery_app.celery_app worker --loglevel=debug --concurrency=4
     depends_on:
       - redis
     volumes:
