@@ -18,6 +18,7 @@ celery_app = make_celery("ocr")
 def minimum_viable_ocr_task(file_out: str):
     logger = logging.getLogger(__name__)
     logger.info("Starting minimum viable ocr task")
+    print("WOOOHOOO")
     ocr = ocrmypdf.ocr("/home/app/test_data/Schoolkidz-December-2021-statement.pdf", f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
     logger.info("Completed minimum viable ocr task")
 
