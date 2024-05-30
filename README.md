@@ -16,12 +16,15 @@ To up the server again (when Traefik is still running):
 
 To see logs:
 `tail -f -n 100 logs/app.log`
+`tail -f -n 100 logs/celery.log`
+
+!Warning logging isn't working properly in the current state
 
 
-### Notes:
-- Instead of going for separating the celery worker and FastAPI
-  application. And having a shared directory for common definitions I
-  tried to keep it ultra simple, and have them both use the same
-  directory and same source code, just other run commands. They do use
-  different Dockerfiles and run in a Different Container. Since the
-  FastAPI doesn't need Access to Tesseract etc.
+### Overview:
+- FastAPI -> Redis -> Celery
+- The celery worker does all the OCR stuff
+- The celery worker runs in a different container then FastAPI
+- If we want to scale in the future we can take out the celery container
+  and have multiple instances all connecting to this FastAPI + Redis
+  instance.
