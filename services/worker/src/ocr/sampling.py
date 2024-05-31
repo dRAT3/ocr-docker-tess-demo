@@ -7,7 +7,7 @@ from src.ocr.pdf_dpi import calculate_image_dpi
 
 logger = logging.getLogger(__name__)
 
-def downsample_pdf(input_pdf, output_pdf=None, dpi=300):
+def downsample_pdf(input_pdf, output_pdf, dpi=300):
     #? check if already at 150?
     """
     Processes a PDF file by downsampling images, converting to grayscale, and saving the result.
@@ -93,7 +93,7 @@ def downsample_pdf(input_pdf, output_pdf=None, dpi=300):
     return
 
 
-def upsample_pdf(input_pdf, output_pdf=None, dpi=600):
+def upsample_pdf(input_pdf, output_pdf, dpi=600):
     """
     **NOTE:  If text is already text then trying to upsample won't have the desired effect
     

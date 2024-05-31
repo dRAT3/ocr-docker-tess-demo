@@ -7,6 +7,7 @@ import logging
 import os
 import re
 import tempfile
+import ocrmypdf
 
 
 def make_celery(app_name):
@@ -40,12 +41,19 @@ def ocr_file_in(file_data, file_in, file_out: str):
         dpi = calculate_image_dpi(temp_file_path)
         logging.info("##### PDF DPI: "+str(dpi)+" ##### at: "+str(file_in))
 
+        pdf_resampled = re.sub(r'(.+)(\.pdf)$', r'\1-resampled\2', temp_file_path)
         if dpi<300:
             logging.warning("[OCR DPI <300 may cause issues] *consider upsampling")
+
+            ### Rasterizing + upsampling (takes 9 seconds on my cheap vps)
             rasterize_pdf(temp_file_path, temp_file_path)
-            
-            pdf_upsampled = re.sub(r'(.+)(\.pdf)$', r'\1-upsampled\2', temp_file_path)
-            upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_upsampled, dpi=300)
+
+            upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
+
         elif dpi>300:
-            logging.info("[OCR DPI >1000 may be slow to process (consider downsampling to 300)")
-            downsample_pdf(input_pdf=temp_file_path, dpi=300)
+            logging.info("[OCR DPI >300 may be slow to process (consider downsampling to 300)")
+
+            downsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
+
+        
+        os.remove(pdf_resampled)
