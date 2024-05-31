@@ -5,6 +5,7 @@ from src.ocr.sampling import upsample_pdf, downsample_pdf
 from src.ocr.utils import rasterize_pdf
 import logging
 import os
+import re
 import tempfile
 
 
@@ -42,7 +43,9 @@ def ocr_file_in(file_data, file_in, file_out: str):
         if dpi<300:
             logging.warning("[OCR DPI <300 may cause issues] *consider upsampling")
             rasterize_pdf(temp_file_path, temp_file_path)
-            upsample_pdf(input_pdf=temp_file_path, dpi=300)
+            
+            pdf_upsampled = re.sub(r'(.+)(\.pdf)$', r'\1-upsampled\2', temp_file_path)
+            upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_upsampled, dpi=300)
         elif dpi>300:
             logging.info("[OCR DPI >1000 may be slow to process (consider downsampling to 300)")
             downsample_pdf(input_pdf=temp_file_path, dpi=300)
