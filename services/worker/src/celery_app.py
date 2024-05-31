@@ -1,7 +1,6 @@
 from celery import Celery
 from src.logging.logger import setup_logging
 from src.ocr.pdf_dpi import calculate_image_dpi
-from src.ocr.ocr_model import upsample_pdf, downsample_pdf
 import logging
 import os
 import tempfile
