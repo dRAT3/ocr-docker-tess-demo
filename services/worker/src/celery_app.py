@@ -1,6 +1,8 @@
 from celery import Celery
 from src.logging.logger import setup_logging
 from src.ocr.pdf_dpi import calculate_image_dpi
+from src.ocr.sampling import upsample_pdf, downsample_pdf
+from src.ocr.utils import rasterize_pdf
 import logging
 import os
 import tempfile
@@ -39,7 +41,8 @@ def ocr_file_in(file_data, file_in, file_out: str):
 
         if dpi<300:
             logging.warning("[OCR DPI <300 may cause issues] *consider upsampling")
-            #upsample_pdf(input_pdf=temp_file_path, dpi=300)
-        elif dpi>1000:
+            rasterize_pdf(temp_file_path, temp_file_path)
+            upsample_pdf(input_pdf=temp_file_path, dpi=300)
+        elif dpi>300:
             logging.info("[OCR DPI >1000 may be slow to process (consider downsampling to 300)")
-            #downsample_pdf(input_pdf=temp_file_path)
+            downsample_pdf(input_pdf=temp_file_path)

@@ -1,12 +1,9 @@
 import time
 import os
 import sys
-import codecs
-import json
 import re
 import shutil
 import subprocess
-import configparser as ConfigParser
 
 LOCAL_PATH = os.path.abspath(os.path.dirname(__file__))+"/"
 sys.path.insert(0,LOCAL_PATH)
@@ -19,9 +16,6 @@ if not 'nt' in os.name:
     os.environ["TESSDATA_PREFIX"] = tessdata  #osr & eng.testeddata
     if not os.path.exists(tessdata+'/eng.traineddata') or not os.path.exists(tessdata+'/osd.traineddata'):
         raise Exception("MISSING tesseract data files: "+str(tessdata))
-
-from get_logger import setup_logging
-from w_storage.ystorage.ystorage_handler import Storage_Helper
 
 
 from pdf2image import convert_from_path  #Rasterize pdf lib  pip install pdf2image

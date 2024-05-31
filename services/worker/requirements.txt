@@ -4,3 +4,4 @@ ghostscript
 ocrmypdf
 pikepdf
 PyMuPDF
+pdf2image
