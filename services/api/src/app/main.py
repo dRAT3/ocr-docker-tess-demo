@@ -33,7 +33,7 @@ async def mvo():
     task = celery_app.send_task('ocr.minimum_viable_ocr', args=[file_out])
     return {"file_out": file_out, "task_id": task.id}
 
-@app.get("/ocr-file-in-random-name")
+@app.post("/ocr-file-in")
 async def ocr_file_in(file: UploadFile = File(...)):
     if not file:
         raise HTTPException(status_code=400)
