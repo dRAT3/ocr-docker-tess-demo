@@ -129,17 +129,17 @@ def upsample_pdf(input_pdf, output_pdf, dpi=600):
 
     ## RASTERIZE no effect.
         #'-dDEBUG',
-    cmd = [
-        'gs',
-        '-o', output_pdf,
-        '-sDEVICE=pdfwrite',
-        '-dNOPAUSE',
-        '-dBATCH',
-        '-dDEBUG',
-        '-dPDFSETTINGS=/prepress',  # High quality setting for prepress output
-        f'-r{dpi}',  # Set your desired DPI resolution
-        input_pdf
-    ]
+#    cmd = [
+#        'gs',
+#        '-o', output_pdf,
+#        '-sDEVICE=pdfwrite',
+#        '-dNOPAUSE',
+#        '-dBATCH',
+#        '-dDEBUG',
+#        '-dPDFSETTINGS=/prepress',  # High quality setting for prepress output
+#        f'-r{dpi}',  # Set your desired DPI resolution
+#        input_pdf
+#    ]
 
     
     ## when upscale also do greyscale
