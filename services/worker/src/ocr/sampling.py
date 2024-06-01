@@ -161,13 +161,17 @@ def upsample_pdf(input_pdf, output_pdf, dpi=600):
     print ("[debug] upsample cmd: "+str(" ".join(cmd)))
 
     try:
-        subprocess.run(cmd, check=True)
-    except FileNotFoundError:
-        print("Error: Ghostscript is not installed or not in the system's PATH.")
+        # Run command and capture output
+        result = subprocess.run(cmd, check=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        # Log the stdout and stderr
+        if result.stdout:
+            logger.info("Command stdout: %s", result.stdout.strip())
+        if result.stderr:
+            logger.error("Command stderr: %s", result.stderr.strip())
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred while running Ghostscript: {e}")
-    else:
-        print("PDF processed successfully.")
+        # Log an error message if the command fails
+        logger.error("Command failed with exit code %s: %s", e.returncode, e.stderr)
+        raise
 
     ## CHECK OUTPUT
     dpi_output=calculate_image_dpi(output_pdf)
