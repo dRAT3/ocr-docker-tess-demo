@@ -49,7 +49,7 @@ def ocr_file_in(file_data, file_in, file_out: str):
 
             ### Rasterizing + upsampling (takes 9 seconds on my cheap vps)
             rasterize_pdf(temp_file_path, pdf_rasterized)
-            upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
+            #upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
 
             os.remove(pdf_rasterized)
         elif dpi>300:
