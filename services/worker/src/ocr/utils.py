@@ -13,6 +13,6 @@ def rasterize_pdf(input_pdf_path, output_pdf_path, dpi=300):
 
     # Save the images as a single PDF
     images[0].save(output_pdf_path, "PDF", resolution=dpi, save_all=True, append_images=images[1:])
-    logger.info("Rasterized: {output_pdf_path}")
+    logger.info(f"Rasterized: {output_pdf_path}")
 
     return
