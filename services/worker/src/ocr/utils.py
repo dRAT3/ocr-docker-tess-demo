@@ -14,10 +14,9 @@ def rasterize_pdf(input_pdf_path, output_pdf_path, dpi=300):
     with tempfile.TemporaryDirectory() as temp_dir:
         images = convert_from_path(input_pdf_path, dpi=dpi, output_folder=temp_dir)
 
-    # Save the images as a single PDF
-    images[0].save(output_pdf_path, "PDF", resolution=dpi, save_all=True, append_images=images[1:])
-    out_dpi = calculate_image_dpi(output_pdf_path)
-    logger.info(f"Rasterized: {output_pdf_path} at {out_dpi}")
-    
+        # Save the images as a single PDF
+        images[0].save(output_pdf_path, "PDF", resolution=dpi, save_all=True, append_images=images[1:])
+        out_dpi = calculate_image_dpi(output_pdf_path)
+        logger.info(f"Rasterized: {output_pdf_path} at {out_dpi}")
 
     return
