@@ -43,9 +43,9 @@ def ocr_file_in(file_data, file_in, file_out: str):
 
         pdf_resampled = re.sub(r'(.+)(\.pdf)$', r'\1_resampled\2', temp_file_path)
         if dpi<300:
-
-            #pdf_rasterized = re.sub(r'(.+)(\.pdf)$', r'\1_rasterized\2', temp_file_path)
             logging.warning("[OCR DPI <300 may cause issues] *consider upsampling")
+
+            pdf_rasterized = re.sub(r'(.+)(\.pdf)$', r'\1_rasterized\2', temp_file_path)
 
             ### Rasterizing + upsampling (takes 9 seconds on my cheap vps)
             rasterize_pdf(temp_file_path, pdf_rasterized)
