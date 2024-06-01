@@ -38,4 +38,4 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str):
         temp_file.write(file_data)
         temp_file_path = temp_file.name
 
-        ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+        ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/logs/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
