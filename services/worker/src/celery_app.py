@@ -51,7 +51,7 @@ def ocr_file_in(file_data, file_in, file_out: str):
             rasterize_pdf(temp_file_path, pdf_rasterized)
             upsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
 
-            #os.remove(pdf_rasterized)
+            os.remove(pdf_rasterized)
         elif dpi>300:
             logging.info("[OCR DPI >300 may be slow to process (consider downsampling to 300)")
 
