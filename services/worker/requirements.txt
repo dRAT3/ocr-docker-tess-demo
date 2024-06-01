@@ -5,3 +5,4 @@ ocrmypdf
 pikepdf
 PyMuPDF
 pdf2image
+olefile

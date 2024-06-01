@@ -41,10 +41,10 @@ def ocr_file_in(file_data, file_in, file_out: str):
         dpi = calculate_image_dpi(temp_file_path)
         logging.info("##### PDF DPI: "+str(dpi)+" ##### at: "+str(file_in))
 
-        pdf_resampled = re.sub(r'(.+)(\.pdf)$', r'\1-resampled\2', temp_file_path)
+        pdf_resampled = re.sub(r'(.+)(\.pdf)$', r'\1_resampled\2', temp_file_path)
         if dpi<300:
 
-            pdf_rasterized = re.sub(r'(.+)(\.pdf)$', r'\1-rasterized\2', temp_file_path)
+            pdf_rasterized = re.sub(r'(.+)(\.pdf)$', r'\1_rasterized\2', temp_file_path)
             logging.warning("[OCR DPI <300 may cause issues] *consider upsampling")
 
             ### Rasterizing + upsampling (takes 9 seconds on my cheap vps)
@@ -58,4 +58,6 @@ def ocr_file_in(file_data, file_in, file_out: str):
             downsample_pdf(input_pdf=temp_file_path, output_pdf=pdf_resampled, dpi=300)
 
         
+        #ocr = ocrmypdf.ocr(pdf_resampled, f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+
         os.remove(pdf_resampled)
