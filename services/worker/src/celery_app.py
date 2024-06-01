@@ -33,6 +33,9 @@ def minimum_viable_ocr_task(file_out: str):
 
 
 @celery_app.task(name="ocr.ocr_file_in")
-def ocr_file_in(file_data, file_in, file_out: str):
-        ocr = ocrmypdf.ocr(file_data, f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+def ocr_file_in(file_data: bytes, file_in, file_out: str):
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
+        temp_file.write(file_data)
+        temp_file_path = temp_file.name
 
+        ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/test_data/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
