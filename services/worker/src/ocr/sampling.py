@@ -122,10 +122,11 @@ def upsample_pdf(input_pdf, output_pdf, dpi=600):
         "-sDEVICE=pdfwrite",
         "-dNOPAUSE",
         "-dBATCH",
-        f"-r {dpi}",
+        f"-r{dpi}",
         input_pdf
     ]
     
+
     ## RASTERIZE no effect.
         #'-dDEBUG',
     cmd = [
@@ -134,8 +135,9 @@ def upsample_pdf(input_pdf, output_pdf, dpi=600):
         '-sDEVICE=pdfwrite',
         '-dNOPAUSE',
         '-dBATCH',
+        '-dDEBUG',
         '-dPDFSETTINGS=/prepress',  # High quality setting for prepress output
-        f'-r {dpi}',  # Set your desired DPI resolution
+        f'-r{dpi}',  # Set your desired DPI resolution
         input_pdf
     ]
 
