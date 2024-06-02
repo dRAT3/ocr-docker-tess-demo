@@ -3,7 +3,6 @@ from contextlib import asynccontextmanager
 from src.app.generic_exception_handler import generic_exception_handler
 from src.logging.logger import setup_logging
 from celery import Celery
-import base64
 import uuid
 import re
 
@@ -55,11 +54,18 @@ async def ocr_file_in(file: UploadFile = File(...)):
 @app.get("/check-task/{task_id}")
 async def check_task(task_id: str):
     task_result = celery_app.AsyncResult(task_id)
+    task_data = task_result.get()
+
+    ### Remove the result from the redis queue to save on ram
+    task_result.forget()
+
+
     return {
-        "task_id": task_id,
-        "status": task_result.status,
-        "result": task_result.result
+        "task_id": task_data.task_id,
+        "status": task_data.status,
+        "result": task_data.result
     }
+    
 
 # Used for logging all uncatched exceptions
 app.add_exception_handler(Exception, generic_exception_handler)

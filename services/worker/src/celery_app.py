@@ -34,7 +34,7 @@ def minimum_viable_ocr_task(file_out: str):
 
 
 @celery_app.task(name="ocr.ocr_file_in")
-def ocr_file_in(file_data: bytes, file_in, file_out: str):
+def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
     """
         Will grab the pdf as bytes from the Redis queue. Write to a tempfile and 
         do OCR over it, and return a searchable pdf to the Redis queue. This searchable
