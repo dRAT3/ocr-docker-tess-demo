@@ -51,5 +51,14 @@ async def ocr_file_in(file: UploadFile = File(...)):
 
     return {"file_out": file_out, "task_id": task.id}
 
+@app.get("/check-task/{task_id}")
+async def check_task(task_id: str):
+    task_result = celery_app.AsyncResult(task_id)
+    return {
+        "task_id": task_id,
+        "status": task_result.status,
+        "result": task_result.result
+    }
+
 # Used for logging all uncatched exceptions
 app.add_exception_handler(Exception, generic_exception_handler)
