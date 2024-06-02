@@ -53,19 +53,25 @@ async def ocr_file_in(file: UploadFile = File(...)):
 
 @app.get("/check-task/{task_id}")
 async def check_task(task_id: str):
-    task_result = celery_app.AsyncResult(task_id)
-    task_data = task_result.get()
+    task = celery_app.AsyncResult(task_id)
 
-    ### Remove the result from the redis queue to save on ram
-    task_result.forget()
+    ### Remove the result from the redis queue to save on ram if it has a result
+    if task.result:
+        task_data = task.get()
+        task.forget()
 
+        return {
+            "task_id": task_data.task_id,
+            "status": task_data.status,
+            "result": task_data.result
+        }
 
     return {
-        "task_id": task_data.task_id,
-        "status": task_data.status,
-        "result": task_data.result
+        "task_id": task.task_id,
+        "status": task.status,
+        "result": task.result
     }
-    
+
 
 # Used for logging all uncatched exceptions
 app.add_exception_handler(Exception, generic_exception_handler)
