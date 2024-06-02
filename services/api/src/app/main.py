@@ -57,13 +57,16 @@ async def check_task(task_id: str):
 
     ### Remove the result from the redis queue to save on ram if it has a result
     if task.result:
-        task_data = task.get()
+        task_id = task.task_id
+        status = task.status
+        result = task.get()
+
         task.forget()
 
         return {
-            "task_id": task_data.task_id,
-            "status": task_data.status,
-            "result": task_data.result
+            "task_id": task_id,
+            "status": status,
+            "result": result
         }
 
     return {
