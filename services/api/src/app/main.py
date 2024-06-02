@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from src.app.generic_exception_handler import generic_exception_handler
 from src.logging.logger import setup_logging
 from celery import Celery
+import base64
 import uuid
 import re
 
