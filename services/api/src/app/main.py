@@ -53,6 +53,11 @@ async def ocr_file_in(file: UploadFile = File(...)):
 
 @app.get("/check-task/{task_id}")
 async def check_task(task_id: str):
+    """
+        Gets the status of the task you created in ocr_file_in, when the task has 
+        succeeded will return a b64 encoded string of the document and remove the
+        b64 encoded string from the redis queue.
+    """
     task = celery_app.AsyncResult(task_id)
 
     ### Remove the result from the redis queue to save on ram if it has a result
