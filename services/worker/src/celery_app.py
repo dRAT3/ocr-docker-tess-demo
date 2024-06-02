@@ -3,6 +3,7 @@ from src.logging.logger import setup_logging
 from src.ocr.pdf_dpi import calculate_image_dpi
 from src.ocr.sampling import upsample_pdf, downsample_pdf
 from src.ocr.utils import rasterize_pdf
+from src.ocr.utils import alg_decrypt_pdf
 import logging
 import os
 import re
@@ -37,5 +38,16 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str):
     with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
         temp_file.write(file_data)
         temp_file_path = temp_file.name
+        try:
+            ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/logs/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+        except Exception as e:
+            str_e=str(e)
+            if 'PDF is encrypted' in str_e:
+                logging.info("PDF encrypted, decrypting and retrying")
+                is_encrypted, did_decryption, _ = alg_decrypt_pdf(temp_file_path)
+                if did_decryption:
+                    ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/logs/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+            else:
+                logging.error("[error] at ocr: "+str_e)
+                raise Exception("OCR failed: "+str_e) #[1] (count)  out of memory?
 
-        ocr = ocrmypdf.ocr(temp_file_path, f"/home/app/logs/{file_out}", language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
