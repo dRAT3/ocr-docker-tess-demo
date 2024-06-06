@@ -28,3 +28,28 @@ To see logs:
 - If we want to scale in the future we can take out the celery container
   and have multiple instances all connecting to this FastAPI + Redis
   instance.
+
+### Curl
+
+post a pdf (it's currently running on api.nan0.bot:
+
+```
+curl -X POST "https://api.nan0.bot/ocr-file-in"
+     -H "accept: application/json"
+     -H "Content-Type: multipart/form-data"
+     -F "file=@services/worker/test_data/sk.pdf"
+```
+response:
+```
+{"file_out":"sk-ocr-standalone.pdf","task_id":"0b23f9e2-e55e-46a0-bc20-51f58952f7bd"}
+```
+
+get the status(use filename):
+```
+curl 'https://api.nan0.bot/check-task/sk-ocr-standalone.pdf' \
+```
+
+response (when status isn't pending anymore it will return the file):
+```
+{"task_id":"0b23f9e2-e55e-46a0-bc20-51f58952f7bd","status":"PENDING","result":null}
+```
