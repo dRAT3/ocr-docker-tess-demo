@@ -48,6 +48,8 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
 
         try:
             ocr = ocrmypdf.ocr(temp_file_path, out_file_path, language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+            return out_file_path 
+
         except Exception as e:
             str_e=str(e)
             if 'PDF is encrypted' in str_e:
@@ -56,6 +58,8 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
                 if did_decryption:
                     try:
                         ocr = ocrmypdf.ocr(temp_file_path, out_file_path, language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+                        return out_file_path
+
                     except Exception as err:
                         logger.error(f"OCR failed: {err}")
                 else:
@@ -65,4 +69,3 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
                 logger.error("[error] at ocr: "+str_e)
                 raise Exception("OCR failed: "+str_e) #[1] (count)  out of memory?
         
-        return out_file_path 
