@@ -3,7 +3,7 @@ FROM python:3.11-bookworm
 ENV WORKDIR=/usr/src/app
 ENV USER=app
 ENV APP_HOME=/home/app/web
-ENV APP_DOC_DIR=/home/app/pdf_out
+ENV DOC_DIR=/home/app/pdf_out
 ENV LOG_DIR=/home/app/logs
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 
