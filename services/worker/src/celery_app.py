@@ -44,10 +44,12 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
         temp_file.write(file_data)
         temp_file_path = temp_file.name
         ### Currently writing to logs dir for easy download from server, needs to be changed
-        out_file_path = f"/home/app/logs/{file_out}"
+        out_file_path = f"/home/app/pdf_out/{file_out}"
 
         try:
             ocr = ocrmypdf.ocr(temp_file_path, out_file_path, language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+            return out_file_path 
+
         except Exception as e:
             str_e=str(e)
             if 'PDF is encrypted' in str_e:
@@ -56,6 +58,8 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
                 if did_decryption:
                     try:
                         ocr = ocrmypdf.ocr(temp_file_path, out_file_path, language='eng',rotate_pages=True, deskew=True, force_ocr=True, jobs=2)
+                        return out_file_path
+
                     except Exception as err:
                         logger.error(f"OCR failed: {err}")
                 else:
@@ -65,8 +69,3 @@ def ocr_file_in(file_data: bytes, file_in, file_out: str) -> str:
                 logger.error("[error] at ocr: "+str_e)
                 raise Exception("OCR failed: "+str_e) #[1] (count)  out of memory?
         
-        with open(out_file_path, "rb") as file:
-            pdf_bytes = file.read()
-            b64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
-
-        return b64_pdf

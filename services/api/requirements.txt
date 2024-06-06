@@ -3,3 +3,4 @@ gunicorn
 uvicorn
 python-multipart
 celery[redis]
+redis
