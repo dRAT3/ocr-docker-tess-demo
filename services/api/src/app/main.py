@@ -6,7 +6,7 @@ from src.logging.logger import setup_logging
 from celery import Celery
 import uuid
 import re
-import aioredis
+from redis import asyncio as aioredis
 
 redis: aioredis.Redis | None = None
 

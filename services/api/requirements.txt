@@ -3,4 +3,4 @@ gunicorn
 uvicorn
 python-multipart
 celery[redis]
-aioredis
+redis
