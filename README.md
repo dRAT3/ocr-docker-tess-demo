@@ -53,3 +53,5 @@ response (when status isn't pending anymore it will return the file):
 ```
 {"task_id":"0b23f9e2-e55e-46a0-bc20-51f58952f7bd","status":"PENDING","result":null}
 ```
+note: When you downloaded the file, it will be immediately removed from
+the server, i.e. you can only get it once.
