@@ -19,11 +19,15 @@ RUN pip3 install -r /home/app/requirements.txt
 
 # Copy your Python script into the container
 COPY . /home/app/
+RUN mkdir -p /home/app/pdf_out
+
 
 # Set a working directory
 WORKDIR /home/app
 
 RUN chown -R tesseract:tesseract /home/app
+RUN chown -R tesseract:tesseract /home/app/pdf_out
+
 USER tesseract
 
 ENTRYPOINT ["celery"]

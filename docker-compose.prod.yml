@@ -15,6 +15,7 @@ services:
       - "traefik.http.routers.fastapi.tls.certresolver=letsencrypt"
     volumes:
       - "./logs:/home/app/logs"
+      - "./pdf_out:/home/app/pdf_out"
     depends_on:
       - redis
       - worker
@@ -42,3 +43,4 @@ services:
       - redis
     volumes:
       - "./logs:/home/app/logs"
+      - "./pdf_out:/home/app/pdf_out"

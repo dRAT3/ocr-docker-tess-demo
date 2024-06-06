@@ -72,7 +72,6 @@ async def check_task(file_name_out: str):
 
     task = celery_app.AsyncResult(task_id)
 
-    ### Remove the result from the redis queue to save on ram if it has a result
     if task.result:
         result = task.get()
         task.forget()
